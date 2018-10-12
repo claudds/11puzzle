@@ -117,6 +117,7 @@ def a_star_algorithm(heuristic):
 
     while open_list:
         current = heappop(open_list)
+        print("Current value: " + str(current.value) + " at level " + str(current.level))
         if current.cost is None:
             if heuristic is "Hamming":
                 hamming_distance(current, current.get_level())
@@ -133,6 +134,7 @@ def a_star_algorithm(heuristic):
 
         current.derive_children(current.get_level())
         next_moves = current.get_children()
+        closed_list.append(current)
 
         for move in next_moves:
             if move not in closed_list:
@@ -149,15 +151,10 @@ def a_star_algorithm(heuristic):
                     current_cost = current_move_in_list.get_cost()
                     if h < current_cost:
                         heappush(open_list, move)
-                        print("replacing a node with a better path")
                     else:
                         heappush(open_list, current_move_in_list)
-                        print("Node does not have a better path")
                 else:
                     heappush(open_list, move)
-                    print("This node is not already in the list")
-        for value in open_list:
-            print(str(value.value) + " costs " + str(value.cost))
 
 
 # Though we are passing a "total cost" to the function, the total cost is only used for algorithm A*
@@ -191,9 +188,9 @@ def out_of_row_column(node, total_cost):
 
 
 # depth_first_search()
-#best_first_search("Hamming")
-#best_first_search("OORC")
-# a_star_algorithm("Hamming")
-#a_star_algorithm("OORC")
+# best_first_search("Hamming")
+# best_first_search("OORC")
+a_star_algorithm("Hamming")
+# a_star_algorithm("OORC")
 
 

@@ -37,14 +37,14 @@ class Node:
         self.children = []
         empty_space = self.value.index(0)
 
-        child1 = self.slide("UP", empty_space, self.level+1)
-        child2 = self.slide("UP-RIGHT", empty_space, self.level+1)
-        child3 = self.slide("RIGHT", empty_space, self.level+1)
-        child4 = self.slide("DOWN-RIGHT", empty_space, self.level+1)
-        child5 = self.slide("DOWN", empty_space, self.level+1)
-        child6 = self.slide("DOWN-LEFT", empty_space, self.level+1)
-        child7 = self.slide("LEFT", empty_space, self.level+1)
-        child8 = self.slide("UP-LEFT", empty_space, self.level+1)
+        child1 = self.slide("UP", empty_space, level+1)
+        child2 = self.slide("UP-RIGHT", empty_space, level+1)
+        child3 = self.slide("RIGHT", empty_space, level+1)
+        child4 = self.slide("DOWN-RIGHT", empty_space, level+1)
+        child5 = self.slide("DOWN", empty_space, level+1)
+        child6 = self.slide("DOWN-LEFT", empty_space, level+1)
+        child7 = self.slide("LEFT", empty_space, level+1)
+        child8 = self.slide("UP-LEFT", empty_space, level+1)
 
         self.children.extend([child1, child2, child3, child4, child5, child6, child7, child8])
         self.children = list(filter(None, self.children))
