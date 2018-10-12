@@ -109,6 +109,7 @@ def best_first_search(heuristic):
                 move.set_cost(h)
                 heappush(open_list, move)
 
+
 def a_star_algorithm(heuristic):
     # open list is a priority queue sorted by total cost
     heappush(open_list, puzzle_start_state)
@@ -134,22 +135,30 @@ def a_star_algorithm(heuristic):
         next_moves = current.get_children()
 
         for move in next_moves:
-            if move not in closed_list and move not in open_list:
-                h = 0
+            if move not in closed_list:
+                h = move.get_level()
                 if heuristic is "Hamming":
-                    h = hamming_distance(current, move.get_level())
+                    h = hamming_distance(current, h)
                 elif heuristic is "OORC":
-                    h = out_of_row_column(current, move.get_level())
+                    h = out_of_row_column(current, h)
                 move.set_cost(h)
                 if move in open_list:
                     # If the node is already in the open list, but the current path is shorter, replace it and
                     # take this path
-                    current_cost = open_list[open_list.index(move)].get_cost()
+                    current_move_in_list = open_list.pop(open_list.index(move))
+                    current_cost = current_move_in_list.get_cost()
                     if h < current_cost:
                         heappush(open_list, move)
+                        print("replacing a node with a better path")
+                    else:
+                        heappush(open_list, current_move_in_list)
+                        print("Node does not have a better path")
                 else:
                     heappush(open_list, move)
-                #print("Move " + str(move.value) + " with cost " + str(h))
+                    print("This node is not already in the list")
+        for value in open_list:
+            print(str(value.value) + " costs " + str(value.cost))
+
 
 # Though we are passing a "total cost" to the function, the total cost is only used for algorithm A*
 # in the best first algorithm, a 0 is passed as no other costs are considered
@@ -184,7 +193,7 @@ def out_of_row_column(node, total_cost):
 # depth_first_search()
 #best_first_search("Hamming")
 #best_first_search("OORC")
-#a_star_algorithm("Hamming")
-a_star_algorithm("OORC")
+# a_star_algorithm("Hamming")
+#a_star_algorithm("OORC")
 
 

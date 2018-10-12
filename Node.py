@@ -27,6 +27,9 @@ class Node:
     def get_level(self):
         return self.level
 
+    def get_value(self):
+        return self.value
+
     def derive_children(self, level):
         if self.value == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0] :
             return None
