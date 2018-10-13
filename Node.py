@@ -64,38 +64,38 @@ class Node:
             if empty not in range(0, puzzle_width):
                 jump = puzzle_width
                 child[empty], child[empty-jump] = child[empty-jump], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else : return None
         if direction_index == 1: #UP-RIGHT
             if empty not in range(0, puzzle_width) and (empty+1) % puzzle_width != 0:
                 jump = puzzle_width-1
                 child[empty], child[empty-jump] = child[empty-jump], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else: return None
         if direction_index == 2: #RIGHT
             if (empty+1) % puzzle_width != 0:
                 child[empty], child[empty+1] = child[empty+1], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else: return None
         if direction_index == 3: #DOWN-RIGHT
             if empty not in range(((puzzle_height*puzzle_width)-puzzle_width), (puzzle_height*puzzle_width)) and \
                     (empty+1) % puzzle_width != 0:
                 jump = 1+puzzle_width
                 child[empty], child[empty+jump] = child[empty+jump], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else: return None
         if direction_index == 4: #DOWN
             if empty not in range(((puzzle_height*puzzle_width)-puzzle_width), (puzzle_height*puzzle_width)):
                 jump = puzzle_width
                 child[empty], child[empty+jump] = child[empty+jump], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else: return None
         if direction_index == 5: #DOWN-LEFT
             if empty not in range(((puzzle_height*puzzle_width)-puzzle_width), (puzzle_height*puzzle_width)) and \
                     empty % puzzle_width != 0:
                 jump = puzzle_width-1
                 child[empty], child[empty+jump] = child[empty+jump], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else: return None;
         if direction_index == 6: #LEFT
             if empty % puzzle_width != 0 :
@@ -106,7 +106,7 @@ class Node:
             if empty not in range(0, puzzle_width) and empty % puzzle_width != 0:
                 jump = puzzle_width+1
                 child[empty], child[empty-jump] = child[empty-jump], child[empty]
-                return Node(child, self, level)
+                return Node(child, self, level, direction_index)
             else:
                 return None
 
