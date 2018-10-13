@@ -9,7 +9,7 @@ need to add any lines of code, simply uncomment whichever line you wish
 to run.
 
 3. In the terminal, run the following command:
-py .\11puzzledriver.py \<puzzle\>
+py .\11puzzledriver.py <puzzl>
 
     puzzle = a string of 12 integers from 0-11, single space between each
 integer.
