@@ -40,6 +40,7 @@ def output_solution(current, output, start_time):
         else:
             print(puzzle_tile_positions[config.index(0)], config, file=output)
     print("\nMove count: ", move_count, "\nTime Taken: ", (time()-start_time), " seconds", file=output)
+    output.close()
 
 
 #####################################################
@@ -69,12 +70,13 @@ def depth_first_search():
             for move in reversed(next_moves):
                 if move not in closed_list and move not in open_list:
                     open_list.insert(0, move)
-    output.close()
 
 
+#######################################################################
+#                      Best first search                              #
+#     searches the best path according to an admissible heuristic     #
+#######################################################################
 def best_first_search(heuristic):
-
-    ## Open list should be a priority queue
     heappush(open_list, puzzle_start_state)
     start = time()
 
@@ -98,6 +100,7 @@ def best_first_search(heuristic):
 
         current.derive_children(current.get_level())
         next_moves = current.get_children()
+        closed_list.append(current)
 
         for move in next_moves:
             h = 0
@@ -110,6 +113,10 @@ def best_first_search(heuristic):
                 heappush(open_list, move)
 
 
+#######################################################################
+#                          A star search                              #
+#  searches the best path according to the total cost of the path     #
+#######################################################################
 def a_star_algorithm(heuristic):
     # open list is a priority queue sorted by total cost
     heappush(open_list, puzzle_start_state)
@@ -117,7 +124,6 @@ def a_star_algorithm(heuristic):
 
     while open_list:
         current = heappop(open_list)
-        print("Current value: " + str(current.value) + " at level " + str(current.level))
         if current.cost is None:
             if heuristic is "Hamming":
                 hamming_distance(current, current.get_level())
@@ -187,10 +193,10 @@ def out_of_row_column(node, total_cost):
     return h
 
 
-# depth_first_search()
-# best_first_search("Hamming")
-# best_first_search("OORC")
-a_star_algorithm("Hamming")
-# a_star_algorithm("OORC")
+depth_first_search()
+#best_first_search("Hamming")
+#best_first_search("OORC")
+#a_star_algorithm("Hamming")
+#a_star_algorithm("OORC")
 
 

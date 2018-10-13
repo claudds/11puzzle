@@ -5,12 +5,13 @@
 class Node:
     move_priority = ["UP", "UP-RIGHT", "RIGHT", "DOWN-RIGHT", "DOWN", "DOWN-LEFT", "LEFT", "UP-LEFT"]
 
-    def __init__(self, value, parent=None, level=None):
+    def __init__(self, value, parent=None, level=None, priority=None):
         self.value = value
         self.parent = parent
         self.level = level
         # The cost in this case can represent both h(n) or f(n) depending on which algorithm is being used.
         self.cost = None
+        self.priority = priority
 
     def set_cost(self, estimate):
         self.cost = estimate
@@ -30,6 +31,8 @@ class Node:
     def get_value(self):
         return self.value
 
+
+    # inspired by https://github.com/speix/8-puzzle-solver
     def derive_children(self, level):
         if self.value == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0] :
             return None
@@ -57,7 +60,7 @@ class Node:
         puzzle_height = 3
         jump = 0
 
-        if direction_index == 0: #UP
+        if direction is "UP":
             if empty not in range(0, puzzle_width):
                 jump = puzzle_width
                 child[empty], child[empty-jump] = child[empty-jump], child[empty]
@@ -85,25 +88,25 @@ class Node:
             if empty not in range(((puzzle_height*puzzle_width)-puzzle_width), (puzzle_height*puzzle_width)):
                 jump = puzzle_width
                 child[empty], child[empty+jump] = child[empty+jump], child[empty]
-                return Node(child, self, self.level+1)
+                return Node(child, self, level)
             else: return None
         if direction_index == 5: #DOWN-LEFT
             if empty not in range(((puzzle_height*puzzle_width)-puzzle_width), (puzzle_height*puzzle_width)) and \
                     empty % puzzle_width != 0:
                 jump = puzzle_width-1
                 child[empty], child[empty+jump] = child[empty+jump], child[empty]
-                return Node(child, self, self.level+1)
+                return Node(child, self, level)
             else: return None;
         if direction_index == 6: #LEFT
             if empty % puzzle_width != 0 :
                 child[empty], child[empty-1] = child[empty-1], child[empty]
-                return Node(child, self, self.level+1)
+                return Node(child, self, level)
             else: return None
         if direction_index == 7: #UP-LEFT
             if empty not in range(0, puzzle_width) and empty % puzzle_width != 0:
                 jump = puzzle_width+1
                 child[empty], child[empty-jump] = child[empty-jump], child[empty]
-                return Node(child, self, self.level+1)
+                return Node(child, self, level)
             else:
                 return None
 
@@ -114,4 +117,7 @@ class Node:
         return self.cost < other.cost
 
     def __le__(self, other):
+        lte = self.cost == other.cost
+        if lte:
+            return self.priority <= other.priority
         return self.cost <= other.cost
