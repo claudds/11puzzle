@@ -19,9 +19,6 @@ class Node:
     def get_cost(self):
         return self.cost
 
-    def get_children(self):
-        return self.children
-
     def get_parent(self):
         return self.parent
 
@@ -37,7 +34,7 @@ class Node:
         if self.value == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0] :
             return None
 
-        self.children = []
+        children = []
         empty_space = self.value.index(0)
 
         child1 = self.slide("UP", empty_space, level+1)
@@ -49,8 +46,8 @@ class Node:
         child7 = self.slide("LEFT", empty_space, level+1)
         child8 = self.slide("UP-LEFT", empty_space, level+1)
 
-        self.children.extend([child1, child2, child3, child4, child5, child6, child7, child8])
-        return list(filter(None, self.children))
+        children.extend([child1, child2, child3, child4, child5, child6, child7, child8])
+        return list(filter(None, children))
 
     def slide(self, direction, empty, level):
         child = self.value.copy()
