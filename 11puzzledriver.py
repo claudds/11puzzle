@@ -62,8 +62,8 @@ def depth_first_search():
 
         # You only want to generate children that aren't beyond the max depth
         if (max_depth-1) > current.get_level():
-            current.derive_children(current.get_level())
-            next_moves = current.get_children()
+            next_moves = current.derive_children(current.get_level())
+            #next_moves = current.get_children()
 
             # We reverse the children because they are derived in prioritized order,
             # appending them in their original order would have the least prioritized node visited first
@@ -98,8 +98,8 @@ def best_first_search(heuristic):
             output_solution(current, output, start)
             break
 
-        current.derive_children(current.get_level())
-        next_moves = current.get_children()
+        next_moves = current.derive_children(current.get_level())
+        #next_moves = current.get_children()
         closed_list.append(current)
 
         for move in next_moves:
@@ -138,8 +138,8 @@ def a_star_algorithm(heuristic):
             output_solution(current, output, start)
             break
 
-        current.derive_children(current.get_level())
-        next_moves = current.get_children()
+        next_moves = current.derive_children(current.get_level())
+        #next_moves = current.get_children()
         closed_list.append(current)
 
         for move in next_moves:
@@ -193,7 +193,7 @@ def out_of_row_column(node, total_cost):
     return h
 
 
-depth_first_search()
+#depth_first_search()
 #best_first_search("Hamming")
 #best_first_search("OORC")
 #a_star_algorithm("Hamming")

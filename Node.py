@@ -50,7 +50,7 @@ class Node:
         child8 = self.slide("UP-LEFT", empty_space, level+1)
 
         self.children.extend([child1, child2, child3, child4, child5, child6, child7, child8])
-        self.children = list(filter(None, self.children))
+        return list(filter(None, self.children))
 
     def slide(self, direction, empty, level):
         child = self.value.copy()
