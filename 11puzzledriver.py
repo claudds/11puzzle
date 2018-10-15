@@ -174,25 +174,27 @@ def hamming_distance(node, total_cost):
 def out_of_row_column(node, total_cost):
     configuration = node.value
     h = total_cost
+    oorc = set([])
     for i in range(0, len(configuration)):
         if configuration[i] == 0:
             continue
         # check for out of row
         if (i >= 0 and i < 4 and configuration[i] > 4) or (i >= 4 and i < 8 and (configuration[i] < 5 or
                     configuration[i] > 8)) or (i >= 8 and i < 12 and configuration[i] < 9):
-            h += 1
+            oorc.add(i)
         #check out of column
         if ((i % 4) == 0 and (configuration[i] != 1 and configuration[i] != 5 and configuration[i] != 9)) or \
                 ((i % 4) == 1 and (configuration[i] != 2 and configuration[i] != 6 and configuration[i] != 10)) or\
                 ((i % 4) == 2 and (configuration[i] != 3 and configuration[i] != 7 and configuration[i] != 11)) or \
                 ((i % 4) == 3 and (configuration[i] != 4 and configuration[i] != 8)):
-            h += 1
+            oorc.add(i)
+    h = len(oorc)
     return h
 
 
 #depth_first_search()
 #best_first_search("Hamming")
-#best_first_search("OORC")
+best_first_search("OORC")
 #a_star_algorithm("Hamming")
 #a_star_algorithm("OORC")
 
