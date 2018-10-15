@@ -80,6 +80,7 @@ def best_first_search(heuristic):
     start = time()
 
     while open_list:
+        print("Looping")
         current = heappop(open_list)
         if current.cost is None:
             h = 0
@@ -109,6 +110,9 @@ def best_first_search(heuristic):
                     h = out_of_row_column(move, 0)
                 move.set_cost(h)
                 heappush(open_list, move)
+        for move in open_list:
+            print(str(move.value) + " costs " + str(move.cost))
+
 
 
 #######################################################################
@@ -121,6 +125,7 @@ def a_star_algorithm(heuristic):
     start = time()
 
     while open_list:
+        print("looping")
         current = heappop(open_list)
         if current.cost is None:
             if heuristic is "Hamming":
@@ -158,6 +163,8 @@ def a_star_algorithm(heuristic):
                         heappush(open_list, current_move_in_list)
                 else:
                     heappush(open_list, move)
+        for move in open_list:
+            print(str(move.value) + " costs " + str(move.cost))
 
 
 # Though we are passing a "total cost" to the function, the total cost is only used for algorithm A*
@@ -173,7 +180,8 @@ def hamming_distance(node, total_cost):
 
 def out_of_row_column(node, total_cost):
     configuration = node.value
-    h = total_cost
+    h1 = total_cost
+    h2 = total_cost
     oorc = set([])
     for i in range(0, len(configuration)):
         if configuration[i] == 0:
@@ -181,20 +189,20 @@ def out_of_row_column(node, total_cost):
         # check for out of row
         if (i >= 0 and i < 4 and configuration[i] > 4) or (i >= 4 and i < 8 and (configuration[i] < 5 or
                     configuration[i] > 8)) or (i >= 8 and i < 12 and configuration[i] < 9):
-            oorc.add(i)
+            h1 += 1
         #check out of column
         if ((i % 4) == 0 and (configuration[i] != 1 and configuration[i] != 5 and configuration[i] != 9)) or \
                 ((i % 4) == 1 and (configuration[i] != 2 and configuration[i] != 6 and configuration[i] != 10)) or\
                 ((i % 4) == 2 and (configuration[i] != 3 and configuration[i] != 7 and configuration[i] != 11)) or \
                 ((i % 4) == 3 and (configuration[i] != 4 and configuration[i] != 8)):
-            oorc.add(i)
-    h = len(oorc)
+            h2 += 1
+    h = min(h1, h2)
     return h
 
 
 #depth_first_search()
 #best_first_search("Hamming")
-best_first_search("OORC")
+#best_first_search("OORC")
 #a_star_algorithm("Hamming")
 #a_star_algorithm("OORC")
 

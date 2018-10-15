@@ -57,7 +57,7 @@ class Node:
         puzzle_height = 3
         jump = 0
 
-        if direction == 0: #UP
+        if direction_index == 0: #UP
             if empty not in range(0, puzzle_width):
                 jump = puzzle_width
                 child[empty], child[empty-jump] = child[empty-jump], child[empty]
